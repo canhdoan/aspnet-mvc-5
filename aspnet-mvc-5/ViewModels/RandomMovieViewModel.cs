@@ -1,10 +1,10 @@
-﻿using AspNetMVC.Models;
+﻿using aspnet_mvc_5.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AspNetMVC.ViewModels
+namespace aspnet_mvc_5.ViewModels
 {
     public class RandomMovieViewModel
     {

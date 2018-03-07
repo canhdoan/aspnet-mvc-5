@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetMVC.Models
+namespace aspnet_mvc_5.Models
 {
     public class MembershipType
     {
