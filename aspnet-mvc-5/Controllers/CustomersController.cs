@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
 using aspnet_mvc_5.Models;
+using aspnet_mvc_5.ViewModels;
 
 namespace aspnet_mvc_5.Controllers
 {
@@ -20,11 +21,30 @@ namespace aspnet_mvc_5.Controllers
             _context.Dispose();
         }
 
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new CustomerFormViewModel
+            {
+                MembershipTypes = membershipTypes
+            };
+            return View("CustomerForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Customers");
+        }
+
         public ViewResult Index()
         {
             var customers = _context.Customers.Include(c => c.MembershipType).ToList();
 
-            return View(customers);
+            return View("CustomerForm", customers);
         }
 
         public ActionResult Details(int id)
@@ -35,6 +55,22 @@ namespace aspnet_mvc_5.Controllers
                 return HttpNotFound();
 
             return View(customer);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+
+            if (customer == null)
+                return HttpNotFound();
+
+            var viewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+
+            return View("CustomerForm", viewModel);
         }
 
         private IEnumerable<Customer> GetCustomers()
