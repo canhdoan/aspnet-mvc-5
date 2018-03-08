@@ -22,6 +22,11 @@ namespace aspnet_mvc_5.Controllers
             _context.Dispose();
         }
 
+        public ActionResult New()
+        {
+            return View();
+        }
+
         // GET: Movies
         public ActionResult Index()
         {
