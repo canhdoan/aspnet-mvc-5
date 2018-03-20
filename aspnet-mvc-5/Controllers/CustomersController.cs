@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using System.Data.Entity;
-using aspnet_mvc_5.Models;
-using aspnet_mvc_5.ViewModels;
+using AspNetMVC.Models;
+using AspNetMVC.ViewModels;
 
-namespace aspnet_mvc_5.Controllers
+namespace AspNetMVC.Controllers
 {
     public class CustomersController : Controller
     {
@@ -26,28 +25,39 @@ namespace aspnet_mvc_5.Controllers
             var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new CustomerFormViewModel
             {
+                Customer = new Customer(),
                 MembershipTypes = membershipTypes
             };
+
             return View("CustomerForm", viewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
-            if (customer.Id == 0)
+            if (!ModelState.IsValid)
             {
-                _context.Customers.Add(customer);
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+
+                return View("CustomerForm", viewModel);
             }
+
+            if (customer.Id == 0)
+                _context.Customers.Add(customer);
             else
             {
                 var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
-
                 customerInDb.Name = customer.Name;
                 customerInDb.Birthdate = customer.Birthdate;
                 customerInDb.MembershipTypeId = customer.MembershipTypeId;
-                customerInDb.IsSubscribedToNewsLetter = customer.IsSubscribedToNewsLetter;
+                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
             }
-                
+
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Customers");
@@ -55,9 +65,7 @@ namespace aspnet_mvc_5.Controllers
 
         public ViewResult Index()
         {
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-
-            return View(customers);
+            return View();
         }
 
         public ActionResult Details(int id)
@@ -84,15 +92,6 @@ namespace aspnet_mvc_5.Controllers
             };
 
             return View("CustomerForm", viewModel);
-        }
-
-        private IEnumerable<Customer> GetCustomers()
-        {
-            return new List<Customer>
-            {
-                new Customer { Id = 1, Name = "John Smith" },
-                new Customer { Id = 2, Name = "Mary Williams" }
-            };
         }
     }
 }

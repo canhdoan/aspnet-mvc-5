@@ -1,18 +1,18 @@
-namespace aspnet_mvc_5.Migrations
+namespace AspNetMVC.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<aspnet_mvc_5.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AspNetMVC.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(aspnet_mvc_5.Models.ApplicationDbContext context)
+        protected override void Seed(AspNetMVC.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

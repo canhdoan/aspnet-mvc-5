@@ -1,4 +1,4 @@
-namespace aspnet_mvc_5.Migrations
+namespace AspNetMVC.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

@@ -1,10 +1,10 @@
-﻿using aspnet_mvc_5.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AspNetMVC.Models;
 
-namespace aspnet_mvc_5.ViewModels
+namespace AspNetMVC.ViewModels
 {
     public class CustomerFormViewModel
     {

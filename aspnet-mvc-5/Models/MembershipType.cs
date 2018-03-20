@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace aspnet_mvc_5.Models
+namespace AspNetMVC.Models
 {
     public class MembershipType
     {
@@ -10,5 +10,8 @@ namespace aspnet_mvc_5.Models
         public short SignUpFee { get; set; }
         public byte DurationInMonths { get; set; }
         public byte DiscountRate { get; set; }
+
+        public static readonly byte Unknown = 0;
+        public static readonly byte PayAsYouGo = 1;
     }
 }
